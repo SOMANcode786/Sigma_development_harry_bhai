@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Specificity & Cascade</title>
+    <style>
+     
+
+
+        .yellow {
+            color: aliceblue;
+        }
+        .cred{
+            color: blue;
+        }
+        .purple{
+            color: green;
+        }
+          h1 {
+            color: red;
+        }
+        [data-x]{
+            background-color: aqua;
+        }
+        h2{
+            color: blue !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1 class="yellow cred purple" id="heading">
+            this is a heading
+        </h1>
+        <!-- atribute selector -->
+
+        <p class="red" data-x="23">
+            this is the pragraph
+        </p>
+
+        <H2 style="color: red;"> this is the important </H2>
+    </div>
+</body>
+
+</html>
