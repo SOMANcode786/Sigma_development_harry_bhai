@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+
+            width: 50vw;
+            height: 30vh;
+            border: 1px solid black;
+            margin: 10px;
+            box-shadow: 9px 9px 3px #514e4e;
+            border-radius: 10px;
+             ; 
+        }
+
+        .box1 {
+            background-color: blue;
+        }
+
+        .box2 {
+            background-color: aqua;
+            position: relative;
+            top: -238px;
+            left: 71px;
+
+        }
+
+        .box3 {
+            background-color: rgb(235, 232, 228);
+            position: relative;
+            top: -462px;
+            left: 151px;
+        }
+
+        .parent{
+            background-color: aqua;
+            height: 20vh;
+            width: 20vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box box1">
+        <h2 style="color: white; padding: 10px;">Box 1 - Blue</h2>
+        <p style="color: white; padding: 10px;">This is the first box.</p>
+    </div>
+
+    <div class="box box2">
+        <h2 style="padding: 10px;">Box 2 - Aqua</h2>
+        <p style="padding: 10px;">This is the second box, slightly overlapped.</p>
+    </div>
+
+    <div class="box box3">
+        <h2 style="padding: 10px;">Box 3 - Light</h2>
+        <p style="padding: 10px;">This is the third box on top layer.</p>
+    </div>
+
+
+    <div class="parent">
+        <div class="child">
+this the child div
+        </div>
+    </div>
+</body>
+
+
+</html>
