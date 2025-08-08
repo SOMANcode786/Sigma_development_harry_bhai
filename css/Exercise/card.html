@@ -1,13 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=
     , initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            border: 1px solid black;
+            width: 25vw;
+            height: 70vh;
+            position: absolute;
+            margin-top: 10%;
+            margin-left: 45%;
+            border-radius: 10px;
+        }
+        .img img{
+            position: relative;
+            width: 23vw;
+            height: 35vh;
+            margin: 15px;
+            /* border-radius: 3px; */
+            object-fit: cover;
+        }
+        .img{
+            border-radius: 2px solid black;
+        }
+        .btn{
+  display: flex;
+   margin-left: 20px;
+    margin-top: 4px;  
+
+        }
+        .btn button{
+           margin: 5px;
+           border-radius: 8px;
+           padding: 6px;
+        }
+        .content{
+            /* border: 2px solid; */
+            margin-left: 4px;
+            margin-top: 8px;
+        }
+        
+   .btn-btm {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+        .btn-btm button{
+            background-color: aqua;
+            border-radius: 10px;
+            padding: 10px 10px;
+        }
+        .btn-btm button:hover{
+            background-color: black;
+            color: aliceblue;
+        }
+        
+    </style>
 </head>
+
 <body>
-    
-    
+    <div class="main">
+        <div class="img"><img src="main.jpeg" alt="img"></div>
+        <div class="btn">
+          
+            <button>Nature</button>
+            <button>Lake</button>
+            
+        </div>
+        <div class="content">
+            <h1 class="h1">Mercedees Benz </h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam doloremque accusamus neque, harum maxime aspernatur porro ab, a fugiat perferendis ipsa iusto officiis amet ea veniam fuga mollitia nemo rem.</p>
+        </div>
+
+        <div class="btn-btm">
+            <button>
+                se more 
+            </button>
+        </div>
+    </div>
+
 </body>
+
 </html>
