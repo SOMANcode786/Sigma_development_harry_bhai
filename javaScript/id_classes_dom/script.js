@@ -13,3 +13,16 @@ console.log("this is the practice course")
 
 let all=document.querySelectorAll(".box");
 console.log("-->",all)
+
+
+// all.forEach((box,i)=>{
+//   box.addEventListener("click", () => {
+//     box.style.backgroundColor = "green";
+//     box.innerText = "Clicked " + (i + 1);
+//   });
+// });
+
+all[2].addEventListener("dblclick",()=>{
+    all[2].style.backgroundColor="green";
+    all[2].innerHTML="soman";
+})
