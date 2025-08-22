@@ -1,0 +1,39 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+} */
+
+.card{
+display: flex;
+border: 2px solid black;
+width: 1200px;
+justify-content: center;
+align-items: center;
+padding: 12px;
+margin: 12px;
+}
+
+.image img{
+    width:200px
+}
+.text h1,p{
+    padding: 3px 0px;
+}
+
+
+.image {
+    position: relative;  /* correct parent */
+}
+
+.image .capsule {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #3b3939;
+    color: white;
+    padding: 3px 6px;s
+    font-size: 12px;
+    border-radius: 4px;
+}
