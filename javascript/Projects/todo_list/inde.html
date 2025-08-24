@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            background-color: rgb(48, 49, 49);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 23px;
+
+            width: 50vw;
+            height: 50vh;
+
+        }
+.input input{
+    background-color: rgb(78, 95, 89);
+    margin: 34px;
+    padding: 10px;
+    color: white;
+}
+
+.input input:focus{
+    background-color: white;
+    color: black;
+}
+    </style>
+ </head>
+ <body>
+<div class="container">
+    <h1> ✏  To-Do list</h1>
+    <input type="text" id="inp" placeholder="Enter a task ...">
+    <button id="btn">Add Task</button>
+    <ul id="tasklist"></ul>
+</div>
+
+</div>
+<script src="script.js"></script>
+ </body>
+ </html>
