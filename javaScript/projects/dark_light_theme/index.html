@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Light / Dark Mode Toggle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: white;
+      color: black;
+      transition: 0.3s ease; /* smooth change */
+    }
+
+    .dark {
+      background: rgb(32, 21, 21);
+      color: white;
+    }
+
+    .orange{
+        background-color: rgb(8, 8, 7);
+        color: white;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🌞 Light / Dark Mode Toggle 🌙</h2>
+  <p>This is a simple example of toggling themes using DOM.</p>
+  <button id="toggleBtn">Switch to Dark Mode 🌙</button>
+
+  <script>
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      // Button text bhi change karte hain
+      if (document.body.classList.contains("dark")) {
+        toggleBtn.innerText = "Switch to Light Mode 🌞";
+      } else {
+        toggleBtn.innerText = "Switch to Dark Mode 🌙";
+      }
+    });
+  </script>
+</body>
+</html>
