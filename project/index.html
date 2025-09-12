@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Group Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #6366f1;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .study-group-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .student-item {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .subject-badge {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-3">
+                <i class="fas fa-users mr-3 text-indigo-600"></i>
+                Study Group Finder
+            </h1>
+            <p class="text-gray-600 text-lg">Connect with fellow students and study together</p>
+        </div>
+
+        <!-- Join Form -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 card-hover">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-user-plus mr-3 text-indigo-600"></i>
+                Join a Study Group
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-book mr-1 text-indigo-500"></i>
+                        Select Subject
+                    </label>
+                    <select id="subjectSelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+                        <option value="">Choose a subject...</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Engineering">Engineering</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-1 text-indigo-500"></i>
+                        Your Name
+                    </label>
+                    <input type="text" id="studentName" placeholder="Enter your full name" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+                </div>
+                
+                <div class="flex items-end">
+                    <button id="joinBtn" 
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Join Group
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Groups Display -->
+        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-users-class mr-3 text-indigo-600"></i>
+                Current Study Groups
+            </h2>
+            
+            <div id="groupsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Groups will be populated here by JavaScript -->
+            </div>
+            
+            <div id="emptyState" class="text-center py-12 hidden">
+                <i class="fas fa-users-slash text-gray-300 text-6xl mb-4"></i>
+                <h3 class="text-xl text-gray-600 mb-2">No study groups yet</h3>
+                <p class="text-gray-500">Be the first to join a study group!</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-500 text-sm">
+            <p>Study together, learn better together</p>
+            <p class="mt-1">Data is saved locally in your browser</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const subjectSelect = document.getElementById('subjectSelect');
+            const studentName = document.getElementById('studentName');
+            const joinBtn = document.getElementById('joinBtn');
+            const groupsContainer = document.getElementById('groupsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Initialize groups from localStorage
+            let studyGroups = JSON.parse(localStorage.getItem('studyGroups')) || {};
+            
+            // Render groups on page load
+            renderGroups();
+            
+            // Join button event handler
+            joinBtn.addEventListener('click', function() {
+                const subject = subjectSelect.value;
+                const name = studentName.value.trim();
+                
+                if (!subject) {
+                    showAlert('Please select a subject', 'error');
+                    return;
+                }
+                
+                if (!name) {
+                    showAlert('Please enter your name', 'error');
+                    return;
+                }
+                
+                // Add student to group
+                if (!studyGroups[subject]) {
+                    studyGroups[subject] = [];
+                }
+                
+                // Check if student already exists in this subject
+                if (!studyGroups[subject].includes(name)) {
+                    studyGroups[subject].push(name);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('studyGroups', JSON.stringify(studyGroups));
+                    
+                    // Re-render groups
+                    renderGroups();
+                    
+                    // Show success message
+                    showAlert(`Successfully joined ${subject} group!`, 'success');
+                    
+                    // Clear form
+                    studentName.value = '';
+                    subjectSelect.value = '';
+                } else {
+                    showAlert('You have already joined this study group', 'warning');
+                }
+            });
+            
+            // Render all study groups
+            function renderGroups() {
+                groupsContainer.innerHTML = '';
+                const subjects = Object.keys(studyGroups);
+                
+                if (subjects.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyState.classList.add('hidden');
+                
+                subjects.forEach(subject => {
+                    const groupCard = document.createElement('div');
+                    groupCard.className = 'bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg p-5 card-hover';
+                    
+                    groupCard.innerHTML = `
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                <i class="fas fa-book-open mr-2 text-indigo-600"></i>
+                                ${subject}
+                            </h3>
+                            <span class="subject-badge text-white text-sm px-3 py-1 rounded-full">
+                                ${studyGroups[subject].length} student${studyGroups[subject].length !== 1 ? 's' : ''}
+                            </span>
+                        </div>
+                        <div class="study-group-list space-y-2">
+                            ${studyGroups[subject].map(student => `
+                                <div class="student-item bg-white rounded-lg p-3 flex items-center justify-between border border-gray-100">
+                                    <span class="text-gray-700 flex items-center">
+                                        <i class="fas fa-user-graduate mr-2 text-indigo-500"></i>
+                                        ${student}
+                                    </span>
+                                    <button onclick="removeStudent('${subject}', '${student}')" 
+                                            class="text-red-400 hover:text-red-600 transition-colors" 
+                                            title="Remove student">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${studyGroups[subject].length > 0 ? `
+                            <div class="mt-4 pt-3 border-t border-gray-200">
+                                <button onclick="clearGroup('${subject}')" 
+                                        class="w-full py-2 px-4 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors text-sm font-medium">
+                                    <i class="fas fa-trash mr-1"></i>
+                                    Clear Group
+                                </button>
+                            </div>
+                        ` : ''}
+                    `;
+                    
+                    groupsContainer.appendChild(groupCard);
+                });
+            }
+            
+            // Show alert message
+            function showAlert(message, type) {
+                // Remove existing alerts
+                const existingAlert = document.querySelector('.alert-toast');
+                if (existingAlert) {
+                    existingAlert.remove();
+                }
+                
+                const alert = document.createElement('div');
+                alert.className = `alert-toast fixed top-4 right-4 z-50 transform transition-all duration-300 translate-x-32 opacity-0`;
+                
+                const colors = {
+                    success: 'bg-green-500',
+                    error: 'bg-red-500',
+                    warning: 'bg-yellow-500'
+                };
+                
+                const icons = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    warning: 'fa-exclamation-triangle'
+                };
+                
+                alert.innerHTML = `
+                    <div class="${colors[type]} text-white px-6 py-4 rounded-lg shadow-lg flex items-center">
+                        <i class="fas ${icons[type]} mr-3"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(alert);
+                
+                // Animate in
+                setTimeout(() => {
+                    alert.classList.remove('translate-x-32', 'opacity-0');
+                    alert.classList.add('translate-x-0', 'opacity-100');
+                }, 10);
+                
+                // Auto remove after 3 seconds
+                setTimeout(() => {
+                    alert.classList.add('translate-x-32', 'opacity-0');
+                    setTimeout(() => alert.remove(), 300);
+                }, 3000);
+            }
+            
+            // Global functions for button actions
+            window.removeStudent = function(subject, student) {
+                const index = studyGroups[subject].indexOf(student);
+                if (index > -1) {
+                    studyGroups[subject].splice(index, 1);
+                    
+                    // If group is empty, remove it
+                    if (studyGroups[subject].length === 0) {
+                        delete studyGroups[subject];
+                    }
+                    
+                    localStorage.setItem('studyGroups', JSON.stringify(studyGroups));
+                    renderGroups();
+                    showAlert(`Removed ${student} from ${subject}`, 'success');
+                }
+            };
+            
+            window.clearGroup = function(subject) {
+                if (confirm(`Are you sure you want to clear the ${subject} study group?`)) {
+                    delete studyGroups[subject];
+                    localStorage.setItem('studyGroups', JSON.stringify(studyGroups));
+                    renderGroups();
+                    showAlert(`Cleared ${subject} group`, 'success');
+                }
+            };
+        });
+    </script>
+</body>
+</html>
+

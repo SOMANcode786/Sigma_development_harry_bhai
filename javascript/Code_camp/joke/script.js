@@ -3,6 +3,7 @@ let joke = async () => {
     let jokedata = await fetch(
       "https://official-joke-api.appspot.com/random_joke"
     );
+    // console.log("this",jokedata);
     let resp = await jokedata.json();
     console.log(resp);
     document.getElementById("loading-joke").innerHTML = resp.setup;
