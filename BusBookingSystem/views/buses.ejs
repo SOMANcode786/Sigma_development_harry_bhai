@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buses</title>
+  </head>
+  <body>
+    <h2>Available Buses</h2>
+    <ul>
+      <% buses.forEach(bus => { %>
+        <li>
+          <%= bus.name %> - <%= bus.route %> | Seats: <%= bus.seats %>
+          <form method="POST" action="/book/<%= bus.id %>">
+            <button type="submit">Book</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
