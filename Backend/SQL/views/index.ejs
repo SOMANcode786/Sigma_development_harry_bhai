@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Data Fetcher</title>
+</head>
+<body>
+    <h1>Find User Data by ID</h1>
+
+    <form action="/user" method="GET">
+        <label for="id">Enter User ID (e.g., 1, 2, 3):</label>
+        <input type="number" id="id" name="id" required>
+        <button type="submit">Fetch Data</button>
+    </form>
+
+    <hr>
+
+    <% if (error) { %>
+        <p style="color: red;">🚨 <%= error %></p>
+    <% } %>
+
+    <h2>User Details</h2>
+
+    <% if (userData) { %>
+        <div style="border: 1px solid green; padding: 10px;">
+            <p><strong>ID:</strong> <%= userData.id %></p>
+            <p><strong>Name:</strong> <%= userData.name %></p>
+            <p><strong>Email:</strong> <%= userData.email %></p>
+        </div>
+    <% } else { %>
+        <p>Enter an ID above and click "Fetch Data" to see results.</p>
+    <% } %>
+
+</body>
+</html>
