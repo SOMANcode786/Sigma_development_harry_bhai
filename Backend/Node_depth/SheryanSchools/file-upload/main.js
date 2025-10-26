@@ -1,17 +1,24 @@
-const express=require('express')
-const app=express()
+const express = require('express');
+const app = express();
 require("dotenv").config();
-const connectDb=require('./config/db')
-const userModel=require('./models/user')
-const userRoute=require('./routes/upload')
-connectDb()
+const connectDb = require('./config/db');
+const userRoute = require('./routes/upload');
 
-app.set('view engine','ejs')
-app.use(express.json('dev'))
-app.use( express.urlencoded({extended:true}))
+connectDb();
 
-app.use('/',userRoute)
+// EJS template engine
+app.set('view engine', 'ejs');
 
-app.listen(3000,()=>{
-    console.log("localhost:3000")
-})
+// Middleware
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+
+// Static folder for uploaded files
+app.use('/uploads', express.static('uploads'));
+
+// Routes
+app.use('/', userRoute);
+
+app.listen(3000, () => {
+    console.log("🚀 Server running on http://localhost:3000");
+});
