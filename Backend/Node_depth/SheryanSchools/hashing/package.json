@@ -1,19 +1,38 @@
 {
   "name": "hashing",
   "version": "1.0.0",
+<<<<<<< HEAD
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
+=======
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon main.js"
+>>>>>>> 3e16b462f5cb6ec1f7343c590f4e6597c6f33398
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "description": "",
   "dependencies": {
     "dotenv": "^17.2.2",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mongoose": "^8.18.2"
+=======
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.18.3",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.10"
+>>>>>>> 3e16b462f5cb6ec1f7343c590f4e6597c6f33398
   }
 }
